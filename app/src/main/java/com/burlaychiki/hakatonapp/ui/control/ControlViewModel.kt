@@ -3,8 +3,11 @@ package com.burlaychiki.hakatonapp.ui.control
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.burlaychiki.hakatonapp.domain.model.CommandResult
+import com.burlaychiki.hakatonapp.domain.repository.PairingRepository
 import com.burlaychiki.hakatonapp.domain.repository.PcControlRepository
+import com.burlaychiki.hakatonapp.util.toUserMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ControlViewModel @Inject constructor(
-    private val repository: PcControlRepository
+    private val repository: PcControlRepository,
+    private val pairingRepository: PairingRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ControlUiState())
@@ -65,6 +69,22 @@ class ControlViewModel @Inject constructor(
         execute { repository.openFile(path) }
     }
 
+    /** Після успіху isPaired стає false, і навігація сама повертає на екран сканування. */
+    fun onUnpair() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            try {
+                pairingRepository.unpair()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _events.send(ControlUiEvent.ShowMessage(e.toUserMessage()))
+            } finally {
+                _uiState.update { it.copy(isLoading = false) }
+            }
+        }
+    }
+
     private fun currentDelayMinutes(): Int =
         _uiState.value.delayMinutes.toIntOrNull() ?: 0
 
@@ -73,8 +93,10 @@ class ControlViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true) }
             val result = try {
                 block()
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
-                CommandResult(success = false, message = e.message ?: "Невідома помилка")
+                CommandResult(success = false, message = e.toUserMessage())
             }
             _uiState.update { it.copy(isLoading = false) }
             _events.send(ControlUiEvent.ShowMessage(result.message))

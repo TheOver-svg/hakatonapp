@@ -61,19 +61,15 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // Network
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.kotlinx.serialization)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging)
+    // SignalR
+    implementation(libs.microsoft.signalr)
 
-    // Serialization / Coroutines / Storage
-    implementation(libs.kotlinx.serialization.json)
+    // QR-сканер
+    implementation(libs.play.services.code.scanner)
+
+    // Coroutines / Storage
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.datastore.preferences)
-
-    // QR scanner
-    implementation(libs.play.services.code.scanner)
 
     // Tests
     testImplementation(libs.junit)
@@ -83,8 +79,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
-
-    implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.9.0")
 }

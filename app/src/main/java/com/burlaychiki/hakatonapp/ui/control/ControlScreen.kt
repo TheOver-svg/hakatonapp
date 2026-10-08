@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.burlaychiki.hakatonapp.ui.control.components.ConfirmDialog
 import com.burlaychiki.hakatonapp.ui.control.components.OpenFileCard
 import com.burlaychiki.hakatonapp.ui.control.components.ShutdownCard
+import com.burlaychiki.hakatonapp.ui.control.components.UnpairButton
 
 @Composable
 fun ControlScreen(
@@ -85,6 +86,11 @@ fun ControlScreen(
                 path = state.filePath,
                 onPathChange = viewModel::onPathChange,
                 onOpen = viewModel::onOpenFile,
+                enabled = !state.isLoading
+            )
+
+            UnpairButton(
+                onClick = viewModel::onUnpair,
                 enabled = !state.isLoading
             )
         }

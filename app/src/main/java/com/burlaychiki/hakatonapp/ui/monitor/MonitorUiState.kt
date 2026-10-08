@@ -7,5 +7,6 @@ import com.burlaychiki.hakatonapp.domain.model.PcProcess
 data class MonitorUiState(
     val metrics: PcMetrics = PcMetrics(cpu = 0f, gpu = 0f, ram = 0f),
     val processes: List<PcProcess> = emptyList(),
-    val connectionState: ConnectionState = ConnectionState.Connecting
+    val connectionState: ConnectionState = ConnectionState.Connecting,
+    val hasData: Boolean = false
 )

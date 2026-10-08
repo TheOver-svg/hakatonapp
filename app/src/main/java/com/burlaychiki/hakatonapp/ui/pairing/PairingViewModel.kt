@@ -6,6 +6,7 @@ import com.burlaychiki.hakatonapp.data.qr.QrPayloadParser
 import com.burlaychiki.hakatonapp.data.qr.QrScanResult
 import com.burlaychiki.hakatonapp.data.qr.QrScanner
 import com.burlaychiki.hakatonapp.domain.repository.PairingRepository
+import com.burlaychiki.hakatonapp.util.toUserMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -36,7 +37,7 @@ class PairingViewModel @Inject constructor(
                     _state.value = PairingUiState.Pairing
                     pairingRepository.pair(payload)
                         .onSuccess { _state.value = PairingUiState.Success }
-                        .onFailure { _state.value = PairingUiState.Error(it.message ?: "Помилка") }
+                        .onFailure { _state.value = PairingUiState.Error(it.toUserMessage()) }
                 }
                 QrScanResult.Cancelled -> _state.value = PairingUiState.Idle
                 is QrScanResult.Error -> _state.value = PairingUiState.Error(result.message)

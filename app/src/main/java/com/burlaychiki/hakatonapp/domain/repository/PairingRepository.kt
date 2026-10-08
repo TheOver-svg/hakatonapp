@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PairingRepository {
     suspend fun pair(payload: PairingPayload): Result<Unit>
+    suspend fun restore()
     fun isPaired(): Flow<Boolean>
     suspend fun unpair()
 }
