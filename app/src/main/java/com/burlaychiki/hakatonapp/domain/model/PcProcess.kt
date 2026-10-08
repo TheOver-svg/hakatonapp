@@ -1,4 +1,8 @@
 package com.burlaychiki.hakatonapp.domain.model
 
-class PcProcess {
-}
+data class PcProcess(
+    val pid: Int,
+    val name: String,
+    val cpuPercent: Float,
+    val memoryMb: Int
+)

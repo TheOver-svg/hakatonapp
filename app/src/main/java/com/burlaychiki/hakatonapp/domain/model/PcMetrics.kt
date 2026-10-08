@@ -1,4 +1,7 @@
 package com.burlaychiki.hakatonapp.domain.model
 
-class PcMetrics {
-}
+data class PcMetrics(
+    val cpu: Float,
+    val gpu: Float,
+    val ram: Float
+)
