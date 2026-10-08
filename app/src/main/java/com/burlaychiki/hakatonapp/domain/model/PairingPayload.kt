@@ -1,4 +1,8 @@
 package com.burlaychiki.hakatonapp.domain.model
 
-class PairingPayload {
-}
+data class PairingPayload(
+    val host: String,
+    val port: Int,
+    val pairingCode: String,
+    val pcName: String
+)
