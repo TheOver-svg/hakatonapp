@@ -1,4 +1,8 @@
 package com.burlaychiki.hakatonapp.ui.control
 
-class ControlUiState {
-}
+data class ControlUiState(
+    val delayMinutes: String = "0",
+    val filePath: String = "",
+    val isLoading: Boolean = false,
+    val showConfirmDialog: Boolean = false
+)
