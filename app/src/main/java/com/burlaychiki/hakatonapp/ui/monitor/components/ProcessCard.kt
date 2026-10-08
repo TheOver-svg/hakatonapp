@@ -2,6 +2,7 @@ package com.burlaychiki.hakatonapp.ui.monitor.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -21,7 +22,7 @@ fun ProcessCard(
     process: PcProcess,
     modifier: Modifier = Modifier
 ) {
-    Card(modifier = modifier.width(170.dp)) {
+    Card(modifier = modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(12.dp)) {
             Text(
                 text = process.name,
