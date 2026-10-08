@@ -1,4 +1,6 @@
 package com.burlaychiki.hakatonapp.domain.model
 
-class CommandResult {
-}
+data class CommandResult(
+    val success: Boolean,
+    val message: String
+)
