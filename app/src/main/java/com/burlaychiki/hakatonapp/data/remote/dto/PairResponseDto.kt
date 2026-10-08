@@ -1,4 +1,6 @@
 package com.burlaychiki.hakatonapp.data.remote.dto
 
-class PairResponseDto {
-}
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class PairResponseDto(val token: String)
