@@ -51,7 +51,7 @@ class ControlViewModel @Inject constructor(
     }
 
     fun onConfirmShutdown() {
-        val seconds = currentDelayMinutes() * 60
+        val seconds = currentDelayMinutes()
         _uiState.update { it.copy(showConfirmDialog = false) }
         execute { repository.shutdown(seconds) }
     }

@@ -23,7 +23,10 @@ class PcControlRepositoryImpl @Inject constructor(
         execute("Скасування надіслано") { hub.command("CancelShutdown") }
 
     override suspend fun openFile(path: String): CommandResult =
-        execute("Команду відкриття надіслано") { hub.command("OpenFile", path) }
+        execute("Команду відкриття надіслано") { hub.command("ExecuteFile", path) }
+
+    override suspend fun killProcess(processId: String): CommandResult =
+        execute("Команду завершення процесу надіслано") { hub.command("KillProcess", processId) }
 
     private suspend fun execute(okMessage: String, block: suspend () -> Unit): CommandResult =
         try {

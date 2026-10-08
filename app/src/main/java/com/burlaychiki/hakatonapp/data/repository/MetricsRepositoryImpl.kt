@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.roundToInt
 
 @Singleton
 class MetricsRepositoryImpl @Inject constructor(
@@ -19,14 +20,16 @@ class MetricsRepositoryImpl @Inject constructor(
     override fun observeMetrics(): Flow<PcMetrics> = hub.metrics.map { it.toPcMetrics() }
 
     override fun observeProcesses(): Flow<List<PcProcess>> = hub.metrics.map { dto ->
-        dto.processes.orEmpty().map {
-            PcProcess(
-                pid = it.pid,
-                name = it.name ?: "?",
-                cpuPercent = it.cpuPercent,
-                memoryMb = it.memoryMb
-            )
-        }
+        dto.systemProcesses.orEmpty()
+            .filter { !it.id.isNullOrBlank() }
+            .map {
+                PcProcess(
+                    pid = it.id.orEmpty(),
+                    name = it.name?.takeIf { name -> name.isNotBlank() } ?: "?",
+                    cpuPercent = it.cpuUsage,
+                    memoryMb = it.memoryUsage.roundToInt()
+                )
+            }
     }
 
     override fun observeConnectionState(): Flow<ConnectionState> = hub.state

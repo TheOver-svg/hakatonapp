@@ -1,8 +1,8 @@
 package com.burlaychiki.hakatonapp.data.remote.dto
 
 data class ProcessDto(
-    val pid: Int = 0,
+    val id: String? = null,
     val name: String? = null,
-    val cpuPercent: Float = 0f,
-    val memoryMb: Int = 0
+    val cpuUsage: Float = 0f,
+    val memoryUsage: Float = 0f
 )
