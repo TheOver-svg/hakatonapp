@@ -1,4 +1,5 @@
 package com.burlaychiki.hakatonapp.ui.control
 
-class ControlUiEvent {
+sealed interface ControlUiEvent {
+    data class ShowMessage(val text: String) : ControlUiEvent
 }
