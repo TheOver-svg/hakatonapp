@@ -1,4 +1,9 @@
 package com.burlaychiki.hakatonapp.domain.repository
 
-class PcControlRepository {
+import com.burlaychiki.hakatonapp.domain.model.CommandResult
+
+interface PcControlRepository {
+    suspend fun shutdown(delaySeconds: Int): CommandResult
+    suspend fun cancelShutdown(): CommandResult
+    suspend fun openFile(path: String): CommandResult
 }
