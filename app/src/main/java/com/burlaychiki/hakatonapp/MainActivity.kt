@@ -4,12 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.burlaychiki.hakatonapp.ui.navigation.AppNavGraph
+import com.burlaychiki.hakatonapp.ui.navigation.BottomBar
 import com.burlaychiki.hakatonapp.ui.theme.HakatonappTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,14 +21,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HakatonappTheme {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .then(Modifier),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("RemotePC: Hilt працює")
-                    }
+                val navController = rememberNavController()
+
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = { BottomBar(navController) }
+                ) { innerPadding ->
+                    AppNavGraph(
+                        navController = navController,
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
             }
         }
     }
